@@ -15,11 +15,6 @@
         .line-number {
             min-width: 3rem;
         }
-
-        pre {
-            white-space: pre-wrap;
-            word-break: break-word;
-        }
     </style>
 </head>
 
@@ -39,7 +34,7 @@
         <!-- Form -->
         <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-6 mb-6">
             <div class="space-y-4">
-                <!-- URL Input -->
+                <!-- URL -->
                 <div>
                     <label class="block text-sm font-medium text-zinc-400 mb-1.5">File URL</label>
                     <input id="url" type="text"
@@ -48,7 +43,7 @@
                         value="https://raw.githubusercontent.com/microsoft/vscode/main/README.md">
                 </div>
 
-                <!-- Number of Lines -->
+                <!-- Lines + Button -->
                 <div class="flex gap-4">
                     <div class="flex-1">
                         <label class="block text-sm font-medium text-zinc-400 mb-1.5">Number of lines</label>
@@ -71,25 +66,37 @@
 
         <!-- Results -->
         <div id="results" class="hidden bg-zinc-900 border border-zinc-800 rounded-3xl overflow-hidden">
+
+            <!-- Header with Copy Button -->
             <div class="px-6 py-4 border-b border-zinc-800 flex items-center justify-between">
                 <div>
                     <span class="font-medium">Results</span>
                     <span id="result-count" class="text-emerald-400 text-sm ml-2"></span>
                 </div>
                 <button onclick="copyResults()"
-                    class="text-xs px-3 py-1.5 rounded-xl border border-zinc-700 hover:bg-zinc-800 flex items-center gap-x-1.5">
+                    class="flex items-center gap-x-2 text-sm px-4 py-2 rounded-2xl border border-zinc-700 hover:bg-zinc-800 transition-colors">
                     <i class="fa-solid fa-copy"></i>
-                    <span>Copy</span>
+                    <span>Copy Results</span>
                 </button>
             </div>
-            <div id="output" class="p-6 font-mono text-sm leading-relaxed max-h-[500px] overflow-auto"></div>
+
+            <!-- Output -->
+            <div id="output" class="p-6 font-mono text-sm leading-relaxed max-h-[520px] overflow-auto"></div>
+
+            <!-- Bottom Copy Button -->
+            <div class="px-6 py-4 border-t border-zinc-800 flex justify-end">
+                <button onclick="copyResults()"
+                    class="flex items-center gap-x-2 text-sm px-4 py-2 rounded-2xl border border-zinc-700 hover:bg-zinc-800 transition-colors">
+                    <i class="fa-solid fa-copy"></i>
+                    <span>Copy Results</span>
+                </button>
+            </div>
         </div>
 
         <!-- Note -->
         <div class="mt-6 text-xs text-zinc-500 px-1">
             <i class="fa-solid fa-info-circle mr-1"></i>
-            Works best with public files that allow CORS (e.g. GitHub raw files). Some URLs may be blocked by the
-            browser.
+            Works best with public files that allow CORS (e.g. raw GitHub files).
         </div>
     </div>
 
@@ -102,11 +109,10 @@
             const outputEl = document.getElementById('output');
 
             if (!url) {
-                showStatus('Please enter a URL', 'error');
+                showStatus('Please enter a valid URL', 'error');
                 return;
             }
 
-            // Reset UI
             resultsEl.classList.add('hidden');
             outputEl.innerHTML = '';
             showStatus('Fetching lines...', 'loading');
@@ -119,9 +125,7 @@
             try {
                 const response = await fetch(url, { signal: controller.signal });
 
-                if (!response.ok) {
-                    throw new Error(`HTTP Error: ${response.status}`);
-                }
+                if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
 
                 reader = response.body.getReader();
                 const decoder = new TextDecoder();
@@ -143,19 +147,15 @@
                     }
                 }
 
-                if (lines.length < lineCount && leftover) {
-                    lines.push(leftover);
-                }
+                if (lines.length < lineCount && leftover) lines.push(leftover);
 
-                // Display results
                 displayResults(lines, url, lineCount);
-                showStatus('', 'success');
+                showStatus('', '');
 
             } catch (err) {
                 if (err.name === 'AbortError') {
-                    // Normal early stop
                     displayResults(lines, url, lineCount);
-                    showStatus('', 'success');
+                    showStatus('', '');
                 } else {
                     showStatus(`Error: ${err.message}`, 'error');
                     resultsEl.classList.add('hidden');
@@ -191,7 +191,6 @@
                 outputEl.appendChild(div);
             });
 
-            // Show note if file had fewer lines
             if (lines.length < requestedCount) {
                 const note = document.createElement('div');
                 note.className = 'mt-4 text-xs text-amber-400/80';
@@ -206,48 +205,71 @@
             return div.innerHTML;
         }
 
+        function copyResults() {
+            const outputEl = document.getElementById('output');
+            const lines = [];
+
+            // Extract only the actual line content (skip the note)
+            outputEl.querySelectorAll('div.flex').forEach(div => {
+                const span = div.querySelector('span.flex-1');
+                if (span) lines.push(span.textContent);
+            });
+
+            if (lines.length === 0) return;
+
+            const textToCopy = lines.join('\n');
+
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                showToast('Results copied to clipboard');
+            }).catch(() => {
+                // Fallback
+                const textarea = document.createElement('textarea');
+                textarea.value = textToCopy;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                showToast('Results copied to clipboard');
+            });
+        }
+
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = `fixed bottom-6 left-1/2 -translate-x-1/2 bg-zinc-800 border border-zinc-700 
+                         text-emerald-400 px-5 py-3 rounded-2xl text-sm flex items-center gap-x-3 shadow-2xl z-50`;
+            toast.innerHTML = `
+        <i class="fa-solid fa-check text-emerald-500"></i>
+        <span>${message}</span>
+      `;
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.transition = 'all 0.2s ease';
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 200);
+            }, 1600);
+        }
+
         function showStatus(message, type) {
             const statusEl = document.getElementById('status');
-            statusEl.className = 'mb-4 px-4 py-3 rounded-2xl text-sm flex items-center gap-x-2';
-
             if (!message) {
                 statusEl.classList.add('hidden');
                 return;
             }
-
             statusEl.classList.remove('hidden');
 
             if (type === 'loading') {
-                statusEl.className += ' bg-zinc-800 text-zinc-400';
+                statusEl.className = 'mb-4 px-4 py-3 rounded-2xl text-sm flex items-center gap-x-2 bg-zinc-800 text-zinc-400';
                 statusEl.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i> ${message}`;
             } else if (type === 'error') {
-                statusEl.className += ' bg-red-950 text-red-400 border border-red-900';
+                statusEl.className = 'mb-4 px-4 py-3 rounded-2xl text-sm flex items-center gap-x-2 bg-red-950 text-red-400 border border-red-900';
                 statusEl.innerHTML = `<i class="fa-solid fa-exclamation-circle mr-2"></i> ${message}`;
             }
         }
 
-        function copyResults() {
-            const outputEl = document.getElementById('output');
-            const text = outputEl.innerText;
-            navigator.clipboard.writeText(text).then(() => {
-                const originalText = event.currentTarget?.innerHTML;
-                const btns = document.querySelectorAll('button');
-                // Simple feedback
-                const toast = document.createElement('div');
-                toast.className = 'fixed bottom-6 left-1/2 -translate-x-1/2 bg-zinc-800 text-emerald-400 px-4 py-2 rounded-2xl text-sm flex items-center gap-x-2 shadow-xl';
-                toast.innerHTML = `<i class="fa-solid fa-check"></i> Copied to clipboard`;
-                document.body.appendChild(toast);
-                setTimeout(() => toast.remove(), 1800);
-            });
-        }
-
-        // Allow pressing Enter in inputs
-        document.getElementById('url').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') fetchLines();
-        });
-        document.getElementById('lines').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') fetchLines();
-        });
+        // Enter key support
+        document.getElementById('url').addEventListener('keypress', e => { if (e.key === 'Enter') fetchLines(); });
+        document.getElementById('lines').addEventListener('keypress', e => { if (e.key === 'Enter') fetchLines(); });
     </script>
 </body>
 
