@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FirstLines • Read First N Lines</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .line-number {
+            min-width: 3rem;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+    </style>
+</head>
+
+<body class="bg-zinc-950 text-zinc-200">
+    <div class="max-w-3xl mx-auto px-4 py-10">
+        <!-- Header -->
+        <div class="flex items-center gap-x-3 mb-8">
+            <div class="w-11 h-11 bg-emerald-600 rounded-2xl flex items-center justify-center">
+                <i class="fa-solid fa-file-lines text-white text-3xl"></i>
+            </div>
+            <div>
+                <h1 class="text-3xl font-semibold tracking-tight">FirstLines</h1>
+                <p class="text-zinc-400 text-sm">Read the first N lines from any public text file</p>
+            </div>
+        </div>
+
+        <!-- Form -->
+        <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-6 mb-6">
+            <div class="space-y-4">
+                <!-- URL Input -->
+                <div>
+                    <label class="block text-sm font-medium text-zinc-400 mb-1.5">File URL</label>
+                    <input id="url" type="text"
+                        class="w-full bg-zinc-950 border border-zinc-700 focus:border-emerald-600 rounded-2xl px-4 py-3 text-sm outline-none"
+                        placeholder="https://raw.githubusercontent.com/.../file.txt"
+                        value="https://raw.githubusercontent.com/microsoft/vscode/main/README.md">
+                </div>
+
+                <!-- Number of Lines -->
+                <div class="flex gap-4">
+                    <div class="flex-1">
+                        <label class="block text-sm font-medium text-zinc-400 mb-1.5">Number of lines</label>
+                        <input id="lines" type="number" value="10" min="1" max="500"
+                            class="w-full bg-zinc-950 border border-zinc-700 focus:border-emerald-600 rounded-2xl px-4 py-3 text-sm outline-none">
+                    </div>
+                    <div class="flex items-end">
+                        <button onclick="fetchLines()"
+                            class="bg-emerald-600 hover:bg-emerald-500 transition-colors px-8 py-3 rounded-2xl font-medium flex items-center gap-x-2">
+                            <i class="fa-solid fa-download"></i>
+                            <span>Fetch Lines</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Status -->
+        <div id="status" class="hidden mb-4 px-4 py-3 rounded-2xl text-sm flex items-center gap-x-2"></div>
+
+        <!-- Results -->
+        <div id="results" class="hidden bg-zinc-900 border border-zinc-800 rounded-3xl overflow-hidden">
+            <div class="px-6 py-4 border-b border-zinc-800 flex items-center justify-between">
+                <div>
+                    <span class="font-medium">Results</span>
+                    <span id="result-count" class="text-emerald-400 text-sm ml-2"></span>
+                </div>
+                <button onclick="copyResults()"
+                    class="text-xs px-3 py-1.5 rounded-xl border border-zinc-700 hover:bg-zinc-800 flex items-center gap-x-1.5">
+                    <i class="fa-solid fa-copy"></i>
+                    <span>Copy</span>
+                </button>
+            </div>
+            <div id="output" class="p-6 font-mono text-sm leading-relaxed max-h-[500px] overflow-auto"></div>
+        </div>
+
+        <!-- Note -->
+        <div class="mt-6 text-xs text-zinc-500 px-1">
+            <i class="fa-solid fa-info-circle mr-1"></i>
+            Works best with public files that allow CORS (e.g. GitHub raw files). Some URLs may be blocked by the
+            browser.
+        </div>
+    </div>
+
+    <script>
+        async function fetchLines() {
+            const url = document.getElementById('url').value.trim();
+            const lineCount = parseInt(document.getElementById('lines').value) || 10;
+            const statusEl = document.getElementById('status');
+            const resultsEl = document.getElementById('results');
+            const outputEl = document.getElementById('output');
+
+            if (!url) {
+                showStatus('Please enter a URL', 'error');
+                return;
+            }
+
+            // Reset UI
+            resultsEl.classList.add('hidden');
+            outputEl.innerHTML = '';
+            showStatus('Fetching lines...', 'loading');
+
+            const controller = new AbortController();
+            let lines = [];
+            let leftover = '';
+            let reader;
+
+            try {
+                const response = await fetch(url, { signal: controller.signal });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP Error: ${response.status}`);
+                }
+
+                reader = response.body.getReader();
+                const decoder = new TextDecoder();
+
+                while (lines.length < lineCount) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+
+                    const text = decoder.decode(value, { stream: true });
+                    const parts = (leftover + text).split(/\r?\n/);
+                    leftover = parts.pop();
+
+                    for (const line of parts) {
+                        lines.push(line);
+                        if (lines.length >= lineCount) {
+                            controller.abort();
+                            break;
+                        }
+                    }
+                }
+
+                if (lines.length < lineCount && leftover) {
+                    lines.push(leftover);
+                }
+
+                // Display results
+                displayResults(lines, url, lineCount);
+                showStatus('', 'success');
+
+            } catch (err) {
+                if (err.name === 'AbortError') {
+                    // Normal early stop
+                    displayResults(lines, url, lineCount);
+                    showStatus('', 'success');
+                } else {
+                    showStatus(`Error: ${err.message}`, 'error');
+                    resultsEl.classList.add('hidden');
+                }
+            } finally {
+                if (reader) {
+                    try { await reader.cancel(); } catch (_) { }
+                }
+            }
+        }
+
+        function displayResults(lines, url, requestedCount) {
+            const resultsEl = document.getElementById('results');
+            const outputEl = document.getElementById('output');
+            const countEl = document.getElementById('result-count');
+
+            resultsEl.classList.remove('hidden');
+            outputEl.innerHTML = '';
+            countEl.textContent = `${lines.length} line${lines.length !== 1 ? 's' : ''}`;
+
+            if (lines.length === 0) {
+                outputEl.innerHTML = '<div class="text-zinc-500">No lines found.</div>';
+                return;
+            }
+
+            lines.forEach((line, index) => {
+                const div = document.createElement('div');
+                div.className = 'flex gap-3 py-0.5';
+                div.innerHTML = `
+          <span class="line-number text-emerald-500/70 select-none font-mono">${String(index + 1).padStart(3, ' ')}</span>
+          <span class="flex-1">${escapeHtml(line)}</span>
+        `;
+                outputEl.appendChild(div);
+            });
+
+            // Show note if file had fewer lines
+            if (lines.length < requestedCount) {
+                const note = document.createElement('div');
+                note.className = 'mt-4 text-xs text-amber-400/80';
+                note.textContent = `Note: File contains only ${lines.length} line(s) total.`;
+                outputEl.appendChild(note);
+            }
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function showStatus(message, type) {
+            const statusEl = document.getElementById('status');
+            statusEl.className = 'mb-4 px-4 py-3 rounded-2xl text-sm flex items-center gap-x-2';
+
+            if (!message) {
+                statusEl.classList.add('hidden');
+                return;
+            }
+
+            statusEl.classList.remove('hidden');
+
+            if (type === 'loading') {
+                statusEl.className += ' bg-zinc-800 text-zinc-400';
+                statusEl.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i> ${message}`;
+            } else if (type === 'error') {
+                statusEl.className += ' bg-red-950 text-red-400 border border-red-900';
+                statusEl.innerHTML = `<i class="fa-solid fa-exclamation-circle mr-2"></i> ${message}`;
+            }
+        }
+
+        function copyResults() {
+            const outputEl = document.getElementById('output');
+            const text = outputEl.innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = event.currentTarget?.innerHTML;
+                const btns = document.querySelectorAll('button');
+                // Simple feedback
+                const toast = document.createElement('div');
+                toast.className = 'fixed bottom-6 left-1/2 -translate-x-1/2 bg-zinc-800 text-emerald-400 px-4 py-2 rounded-2xl text-sm flex items-center gap-x-2 shadow-xl';
+                toast.innerHTML = `<i class="fa-solid fa-check"></i> Copied to clipboard`;
+                document.body.appendChild(toast);
+                setTimeout(() => toast.remove(), 1800);
+            });
+        }
+
+        // Allow pressing Enter in inputs
+        document.getElementById('url').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') fetchLines();
+        });
+        document.getElementById('lines').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') fetchLines();
+        });
+    </script>
+</body>
+
+</html>
