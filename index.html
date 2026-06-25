@@ -39,15 +39,14 @@
                     <label class="block text-sm font-medium text-zinc-400 mb-1.5">File URL</label>
                     <input id="url" type="text"
                         class="w-full bg-zinc-950 border border-zinc-700 focus:border-emerald-600 rounded-2xl px-4 py-3 text-sm outline-none"
-                        placeholder="https://raw.githubusercontent.com/.../file.txt"
-                        value="https://raw.githubusercontent.com/microsoft/vscode/main/README.md">
+                        value="https://raw.githubusercontent.com/ebrasha/free-v2ray-public-list/refs/heads/main/V2Ray-Config-By-EbraSha-All-Type.txt">
                 </div>
 
                 <!-- Lines + Button -->
                 <div class="flex gap-4">
                     <div class="flex-1">
                         <label class="block text-sm font-medium text-zinc-400 mb-1.5">Number of lines</label>
-                        <input id="lines" type="number" value="10" min="1" max="500"
+                        <input id="lines" type="number" value="41" min="1" max="500"
                             class="w-full bg-zinc-950 border border-zinc-700 focus:border-emerald-600 rounded-2xl px-4 py-3 text-sm outline-none">
                     </div>
                     <div class="flex items-end">
@@ -93,10 +92,9 @@
             </div>
         </div>
 
-        <!-- Note -->
         <div class="mt-6 text-xs text-zinc-500 px-1">
             <i class="fa-solid fa-info-circle mr-1"></i>
-            Works best with public files that allow CORS (e.g. raw GitHub files).
+            Pre-configured to show the first 41 lines of the V2Ray config file by default.
         </div>
     </div>
 
@@ -209,7 +207,6 @@
             const outputEl = document.getElementById('output');
             const lines = [];
 
-            // Extract only the actual line content (skip the note)
             outputEl.querySelectorAll('div.flex').forEach(div => {
                 const span = div.querySelector('span.flex-1');
                 if (span) lines.push(span.textContent);
@@ -222,7 +219,6 @@
             navigator.clipboard.writeText(textToCopy).then(() => {
                 showToast('Results copied to clipboard');
             }).catch(() => {
-                // Fallback
                 const textarea = document.createElement('textarea');
                 textarea.value = textToCopy;
                 document.body.appendChild(textarea);
@@ -266,6 +262,12 @@
                 statusEl.innerHTML = `<i class="fa-solid fa-exclamation-circle mr-2"></i> ${message}`;
             }
         }
+
+        // ==================== AUTO LOAD ====================
+        // Automatically fetch the first 41 lines when the page loads
+        window.onload = function () {
+            fetchLines();
+        };
 
         // Enter key support
         document.getElementById('url').addEventListener('keypress', e => { if (e.key === 'Enter') fetchLines(); });
