@@ -3,20 +3,26 @@ allow-lan: true
 mode: rule
 log-level: info
 proxies:
-- name: 202.61.205.86:4433
+- name: 202.61.205.86:4433-86ab16
   type: hysteria2
   server: 202.61.205.86
   port: 4433
   password: 18cf8030-1ceb-4b7d-8c0c-c036413c144e
   sni: de1.xiaoliyu.cyou
   skip-cert-verify: true
-- name: quran.mci.ai:443
+- name: 202.61.205.86:4433-a6f165
+  type: hysteria2
+  server: 202.61.205.86
+  port: 4433
+  password: 18cf8030-1ceb-4b7d-8c0c-c036413c144e
+  sni: de1.xiaoliyu.cyou
+- name: quran.mci.ai:443-6fd617
   type: hysteria2
   server: quran.mci.ai
   port: 443
   password: 28c05d48e2f470d07a4c392c9bd43849
   sni: quran.mci.ai
-- name: 140.233.177.48:33884
+- name: 140.233.177.48:33884-b46141
   type: hysteria2
   server: 140.233.177.48
   port: 33884
@@ -25,19 +31,58 @@ proxies:
   skip-cert-verify: true
   obfs: salamander
   obfs-password: t-me-V2RayyNGvpn
-- name: jongjmi.odnako.site:8449
+- name: 140.233.177.48:33884-50af8e
+  type: hysteria2
+  server: 140.233.177.48
+  port: 33884
+  password: 3uIVdQh2vc
+  sni: www.oracle.com
+  skip-cert-verify: true
+  obfs: salamander
+  obfs-password: t-me-V2RayyNGvpn
+- name: jongjmi.odnako.site:8449-49fe8c
   type: hysteria2
   server: jongjmi.odnako.site
   port: 8449
   password: 792V1zl5cJHSV3wjyGPXiFbx1YA4BrIr
   sni: jongjmi.odnako.site
-- name: 45.155.103.217:8443
+- name: jongjmi.odnako.site:8449-ccd205
+  type: hysteria2
+  server: jongjmi.odnako.site
+  port: 8449
+  password: 792V1zl5cJHSV3wjyGPXiFbx1YA4BrIr
+  sni: jongjmi.odnako.site
+- name: jongjmi.odnako.site:8449-6c4a03
+  type: hysteria2
+  server: jongjmi.odnako.site
+  port: 8449
+  password: 792V1zl5cJHSV3wjyGPXiFbx1YA4BrIr
+  sni: jongjmi.odnako.site
+- name: 45.155.103.217:8443-cea567
   type: hysteria2
   server: 45.155.103.217
   port: 8443
   password: 87qety_hERGP8Y9_jqier3gw_nA8Q34_B2
   sni: kamil-power-machine.roxa.org
-- name: qg.easyiran.org:56845
+- name: 45.155.103.217:8443-4e5f39
+  type: hysteria2
+  server: 45.155.103.217
+  port: 8443
+  password: 87qety_hERGP8Y9_jqier3gw_nA8Q34_B2
+  sni: kamil-power-machine.roxa.org
+- name: 45.155.103.217:8443-2fe320
+  type: hysteria2
+  server: 45.155.103.217
+  port: 8443
+  password: 87qety_hERGP8Y9_jqier3gw_nA8Q34_B2
+  sni: kamil-power-machine.roxa.org
+- name: 45.155.103.217:8443-514a82
+  type: hysteria2
+  server: 45.155.103.217
+  port: 8443
+  password: 87qety_hERGP8Y9_jqier3gw_nA8Q34_B2
+  sni: kamil-power-machine.roxa.org
+- name: qg.easyiran.org:56845-576582
   type: hysteria2
   server: qg.easyiran.org
   port: 56845
@@ -45,7 +90,15 @@ proxies:
   sni: qg.easyiran.org
   obfs: salamander
   obfs-password: ngljeqgna3hmfr2s
-- name: de1.jamezwin.org:443
+- name: qg.easyiran.org:56845-f6cfee
+  type: hysteria2
+  server: qg.easyiran.org
+  port: 56845
+  password: 91uokb9ud7raz0fk
+  sni: qg.easyiran.org
+  obfs: salamander
+  obfs-password: ngljeqgna3hmfr2s
+- name: de1.jamezwin.org:443-9f106f
   type: hysteria2
   server: de1.jamezwin.org
   port: 443
@@ -53,7 +106,14 @@ proxies:
   sni: de1.jamezwin.org
   obfs: salamander
   obfs-password: u3do5j2gss7mfri9
-- name: 91.107.152.188:40460
+- name: de1.jamezwin.org:443-c9a74f
+  type: hysteria2
+  server: de1.jamezwin.org
+  port: 443
+  password: 9204bccb42c743799c6069feccb7832d
+  sni: de1.jamezwin.org
+  obfs: salamander
+- name: 91.107.152.188:40460-fbeb45
   type: hysteria2
   server: 91.107.152.188
   port: 40460
@@ -62,13 +122,13 @@ proxies:
   skip-cert-verify: true
   obfs: salamander
   obfs-password: t-me-V2RayyNGvpn
-- name: 46.8.210.209:443
+- name: 46.8.210.209:443-04360e
   type: hysteria2
   server: 46.8.210.209
   port: 443
   password: 95c61940-2823-4665-a033-d4f2218329b6
   sni: ru3.kinotorg.net
-- name: srm.kishonline.online:443
+- name: srm.kishonline.online:443-11d02e
   type: hysteria2
   server: srm.kishonline.online
   port: 443
@@ -76,7 +136,7 @@ proxies:
   sni: srm.kishonline.online
   obfs: salamander
   obfs-password: kish-data-center
-- name: 18.157.222.169:54040
+- name: 18.157.222.169:54040-a7ff10
   type: hysteria2
   server: 18.157.222.169
   port: 54040
@@ -84,7 +144,7 @@ proxies:
   sni: free.masir-sefid.shop
   obfs: salamander
   obfs-password: Masir_Sefid
-- name: 91.107.152.188:31999
+- name: 91.107.152.188:31999-5c1eb0
   type: hysteria2
   server: 91.107.152.188
   port: 31999
@@ -93,54 +153,93 @@ proxies:
   skip-cert-verify: true
   obfs: salamander
   obfs-password: t-me-V2RayyNGvpn
-- name: 103.115.109.49:443
+- name: 103.115.109.49:443-74006b
   type: hysteria2
   server: 103.115.109.49
   port: 443
   password: H7mP2xY9kJ4nQ8wR5tF6vB3z
   sni: https://t.me/oneclickvpnkeys
   skip-cert-verify: true
-- name: 18.141.232.182:443
+- name: 103.115.109.49:443-e70d15
+  type: hysteria2
+  server: 103.115.109.49
+  port: 443
+  password: H7mP2xY9kJ4nQ8wR5tF6vB3z
+  sni: https://t.me/oneclickvpnkeys
+- name: 18.141.232.182:443-4fe660
   type: hysteria2
   server: 18.141.232.182
   port: 443
   password: H7mP2xY9kJ4nQ8wR5tF6vB3z
   sni: https://t.me/WangCai2🇨🇳
   skip-cert-verify: true
-- name: 18.190.219.163:443
+- name: 18.141.232.182:443-5b3655
+  type: hysteria2
+  server: 18.141.232.182
+  port: 443
+  password: H7mP2xY9kJ4nQ8wR5tF6vB3z
+  sni: https://t.me/WangCai2🇨🇳
+  skip-cert-verify: true
+- name: 18.190.219.163:443-3d6473
   type: hysteria2
   server: 18.190.219.163
   port: 443
   password: H7mP2xY9kJ4nQ8wR5tF6vB3z
   sni: https://t.me/WangCai2🇨🇳
   skip-cert-verify: true
-- name: 34.212.146.99:443
+- name: 18.190.219.163:443-b2da21
+  type: hysteria2
+  server: 18.190.219.163
+  port: 443
+  password: H7mP2xY9kJ4nQ8wR5tF6vB3z
+  sni: https://t.me/WangCai2🇨🇳
+  skip-cert-verify: true
+- name: 34.212.146.99:443-eac30b
   type: hysteria2
   server: 34.212.146.99
   port: 443
   password: H7mP2xY9kJ4nQ8wR5tF6vB3z
   sni: https://t.me/WangCai2🇨🇳
   skip-cert-verify: true
-- name: 34.219.182.57:443
+- name: 34.212.146.99:443-aa81ae
+  type: hysteria2
+  server: 34.212.146.99
+  port: 443
+  password: H7mP2xY9kJ4nQ8wR5tF6vB3z
+  sni: https://t.me/WangCai2🇨🇳
+  skip-cert-verify: true
+- name: 34.219.182.57:443-6f6bb9
   type: hysteria2
   server: 34.219.182.57
   port: 443
   password: H7mP2xY9kJ4nQ8wR5tF6vB3z
   skip-cert-verify: true
-- name: 44.245.99.184:443
+- name: 34.219.182.57:443-eb384c
+  type: hysteria2
+  server: 34.219.182.57
+  port: 443
+  password: H7mP2xY9kJ4nQ8wR5tF6vB3z
+  skip-cert-verify: true
+- name: 44.245.99.184:443-1a607e
   type: hysteria2
   server: 44.245.99.184
   port: 443
   password: H7mP2xY9kJ4nQ8wR5tF6vB3z
   sni: https://t.me/WangCai2🇨🇳
   skip-cert-verify: true
-- name: 54.245.180.117:443
+- name: 54.245.180.117:443-936476
   type: hysteria2
   server: 54.245.180.117
   port: 443
   password: H7mP2xY9kJ4nQ8wR5tF6vB3z
   skip-cert-verify: true
-- name: 91.107.152.188:40460
+- name: 54.245.180.117:443-54d2ee
+  type: hysteria2
+  server: 54.245.180.117
+  port: 443
+  password: H7mP2xY9kJ4nQ8wR5tF6vB3z
+  skip-cert-verify: true
+- name: 91.107.152.188:40460-94db38
   type: hysteria2
   server: 91.107.152.188
   port: 40460
@@ -149,7 +248,7 @@ proxies:
   skip-cert-verify: true
   obfs: salamander
   obfs-password: t-me-V2RayyNGvpn
-- name: 91.107.174.32:25810
+- name: 91.107.174.32:25810-e00c35
   type: hysteria2
   server: 91.107.174.32
   port: 25810
@@ -158,7 +257,7 @@ proxies:
   skip-cert-verify: true
   obfs: salamander
   obfs-password: T-ME-V2RayyNGvpn
-- name: 179.61.132.96:8443
+- name: 179.61.132.96:8443-406181
   type: hysteria2
   server: 179.61.132.96
   port: 8443
@@ -167,7 +266,7 @@ proxies:
   skip-cert-verify: true
   obfs: salamander
   obfs-password: KevinZakarian
-- name: 91.107.152.188:31999
+- name: 91.107.152.188:31999-4f6df3
   type: hysteria2
   server: 91.107.152.188
   port: 31999
@@ -176,7 +275,25 @@ proxies:
   skip-cert-verify: true
   obfs: salamander
   obfs-password: t-me-V2RayyNGvpn
-- name: 91.107.152.188:40460
+- name: 91.107.152.188:31999-d7cdb7
+  type: hysteria2
+  server: 91.107.152.188
+  port: 31999
+  password: M4q4riAk3C
+  sni: www.amd.com
+  skip-cert-verify: true
+  obfs: salamander
+  obfs-password: t-me-V2RayyNGvpn
+- name: 91.107.152.188:31999-6d8d21
+  type: hysteria2
+  server: 91.107.152.188
+  port: 31999
+  password: M4q4riAk3C
+  sni: www.amd.com
+  skip-cert-verify: true
+  obfs: salamander
+  obfs-password: t-me-V2RayyNGvpn
+- name: 91.107.152.188:40460-b85521
   type: hysteria2
   server: 91.107.152.188
   port: 40460
@@ -185,7 +302,7 @@ proxies:
   skip-cert-verify: true
   obfs: salamander
   obfs-password: t-me-V2RayyNGvpn
-- name: 91.107.152.188:31999
+- name: 91.107.152.188:31999-e9e25d
   type: hysteria2
   server: 91.107.152.188
   port: 31999
@@ -194,13 +311,22 @@ proxies:
   skip-cert-verify: true
   obfs: salamander
   obfs-password: t-me-V2RayyNGvpn
-- name: 185.126.236.152:8443
+- name: 91.107.152.188:31999-22202d
+  type: hysteria2
+  server: 91.107.152.188
+  port: 31999
+  password: Ov5kSglMCd
+  sni: www.amd.com
+  skip-cert-verify: true
+  obfs: salamander
+  obfs-password: t-me-V2RayyNGvpn
+- name: 185.126.236.152:8443-9d7fd8
   type: hysteria2
   server: 185.126.236.152
   port: 8443
   password: Ov_98eqvJ9N8SE3_Bxhr238e_Ntz2_Sxc47_J2
   sni: key-hm-at.1cooldns.com
-- name: 91.107.152.188:31999
+- name: 91.107.152.188:31999-a49efc
   type: hysteria2
   server: 91.107.152.188
   port: 31999
@@ -209,14 +335,20 @@ proxies:
   skip-cert-verify: true
   obfs: salamander
   obfs-password: t-me-V2RayyNGvpn
-- name: pristytools.com.pristytools.com:2053
+- name: pristytools.com.pristytools.com:2053-ba7dd4
   type: hysteria2
   server: pristytools.com.pristytools.com
   port: 2053
   password: TELEGRAM-ID-soalvajavaab
   obfs: salamander
   obfs-password: dwv3ped4yi46iw8r
-- name: 91.107.174.32:25810
+- name: pristytools.com.pristytools.com:2053-537ac2
+  type: hysteria2
+  server: pristytools.com.pristytools.com
+  port: 2053
+  password: TELEGRAM-ID-soalvajavaab
+  obfs: salamander
+- name: 91.107.174.32:25810-3588c4
   type: hysteria2
   server: 91.107.174.32
   port: 25810
@@ -225,7 +357,7 @@ proxies:
   skip-cert-verify: true
   obfs: salamander
   obfs-password: T-ME-V2RayyNGvpn
-- name: 91.107.152.188:31999
+- name: 91.107.152.188:31999-e5db14
   type: hysteria2
   server: 91.107.152.188
   port: 31999
@@ -234,7 +366,7 @@ proxies:
   skip-cert-verify: true
   obfs: salamander
   obfs-password: t-me-V2RayyNGvpn
-- name: 51.89.225.225:58410
+- name: 51.89.225.225:58410-52dca7
   type: hysteria2
   server: 51.89.225.225
   port: 58410
@@ -243,7 +375,7 @@ proxies:
   skip-cert-verify: true
   obfs: salamander
   obfs-password: TeLeGRam=V2RayyNGvpn
-- name: 66.92.161.59:42286
+- name: 66.92.161.59:42286-a6abab
   type: hysteria2
   server: 66.92.161.59
   port: 42286
@@ -252,7 +384,7 @@ proxies:
   skip-cert-verify: true
   obfs: salamander
   obfs-password: t-me-V2RayyNGvpn
-- name: 91.107.174.32:25810
+- name: 91.107.174.32:25810-c0ce65
   type: hysteria2
   server: 91.107.174.32
   port: 25810
@@ -261,7 +393,34 @@ proxies:
   skip-cert-verify: true
   obfs: salamander
   obfs-password: T-ME-V2RayyNGvpn
-- name: 206.71.158.37:35000
+- name: 91.107.174.32:25810-90b9b4
+  type: hysteria2
+  server: 91.107.174.32
+  port: 25810
+  password: V2RayyNGvpn
+  sni: www.amd.com
+  skip-cert-verify: true
+  obfs: salamander
+  obfs-password: T-ME-V2RayyNGvpn
+- name: 91.107.174.32:25810-844741
+  type: hysteria2
+  server: 91.107.174.32
+  port: 25810
+  password: V2RayyNGvpn
+  sni: www.amd.com
+  skip-cert-verify: true
+  obfs: salamander
+  obfs-password: T-ME-V2RayyNGvpn
+- name: 91.107.174.32:25810-ae4cb8
+  type: hysteria2
+  server: 91.107.174.32
+  port: 25810
+  password: V2RayyNGvpn
+  sni: www.amd.com
+  skip-cert-verify: true
+  obfs: salamander
+  obfs-password: T-ME-V2RayyNGvpn
+- name: 206.71.158.37:35000-11e059
   type: hysteria2
   server: 206.71.158.37
   port: 35000
@@ -269,13 +428,28 @@ proxies:
   sni: YAPC-1.afshin.ir
   obfs: salamander
   obfs-password: Yet-Another-Public-Config-1
-- name: ffc60249-t53wg0-t92wi1-1qkeg.hk2.hyhuawei.com:443
+- name: 206.71.158.37:35000-627d09
+  type: hysteria2
+  server: 206.71.158.37
+  port: 35000
+  password: Yet-Another-Public-Config-1
+  sni: YAPC-1.afshin.ir¬e=@FreeOnlineVPN
+  skip-cert-verify: true
+  obfs: salamander
+  obfs-password: Yet-Another-Public-Config-1
+- name: ffc60249-t53wg0-t92wi1-1qkeg.hk2.hyhuawei.com:443-449a5a
   type: hysteria2
   server: ffc60249-t53wg0-t92wi1-1qkeg.hk2.hyhuawei.com
   port: 443
   password: a305ac08-d136-11ee-b6db-f23c91cfbbc9
   sni: ffc60249-t53wg0-t92wi1-1qkeg.hk2.hyhuawei.com
-- name: 91.107.174.32:25810
+- name: ffc60249-t53wg0-t92wi1-1qkeg.hk2.hyhuawei.com:443-5fbfee
+  type: hysteria2
+  server: ffc60249-t53wg0-t92wi1-1qkeg.hk2.hyhuawei.com
+  port: 443
+  password: a305ac08-d136-11ee-b6db-f23c91cfbbc9
+  sni: ffc60249-t53wg0-t92wi1-1qkeg.hk2.hyhuawei.com
+- name: 91.107.174.32:25810-43f57b
   type: hysteria2
   server: 91.107.174.32
   port: 25810
@@ -284,7 +458,7 @@ proxies:
   skip-cert-verify: true
   obfs: salamander
   obfs-password: T-ME-V2RayyNGvpn
-- name: 181.214.99.162:35000
+- name: 181.214.99.162:35000-35d3f4
   type: hysteria2
   server: 181.214.99.162
   port: 35000
@@ -293,7 +467,7 @@ proxies:
   skip-cert-verify: true
   obfs: salamander
   obfs-password: '@JavidnamanIran-Javid-SHAH-KingRezaPahlavi'
-- name: 5.175.249.174:35000
+- name: 5.175.249.174:35000-c69863
   type: hysteria2
   server: 5.175.249.174
   port: 35000
@@ -301,26 +475,56 @@ proxies:
   sni: api.kermanshahi.org
   obfs: salamander
   obfs-password: '@JavidnamanIran-Javid-SHAH-KingRezaPahlavi'
-- name: 155.248.209.237:33333
+- name: 5.175.249.174:35000-9dc7d5
+  type: hysteria2
+  server: 5.175.249.174
+  port: 35000
+  password: b4bd0613-ff7c-4f2f-954d-185915e6ddad
+  sni: api.kermanshahi.org
+  obfs: salamander
+  obfs-password: '@JavidnamanIran-Javid-SHAH-KingRezaPahlavi'
+- name: 5.175.249.174:35000-589236
+  type: hysteria2
+  server: 5.175.249.174
+  port: 35000
+  password: b4bd0613-ff7c-4f2f-954d-185915e6ddad
+  sni: api.kermanshahi.org
+  skip-cert-verify: true
+  obfs: salamander
+  obfs-password: '@JavidnamanIran-Javid-SHAH-KingRezaPahlavi'
+- name: 155.248.209.237:33333-4d63ca
   type: hysteria2
   server: 155.248.209.237
   port: 33333
   password: bce6c821-200d-421f-bf3d-7159e5246ea0
   sni: hy2.123266.xyz
-- name: fast88.screw.page:443
+- name: 155.248.209.237:33333-b6bb12
+  type: hysteria2
+  server: 155.248.209.237
+  port: 33333
+  password: bce6c821-200d-421f-bf3d-7159e5246ea0
+  sni: hy2.123266.xyz
+- name: fast88.screw.page:443-1d8c7f
   type: hysteria2
   server: fast88.screw.page
   port: 443
   password: c0aa0cee-e855-4bcc-9afc-46241cb17990
   sni: fast88.screw.page
-- name: 62.210.124.146:22000
+- name: 62.210.124.146:22000-9e50f9
   type: hysteria2
   server: 62.210.124.146
   port: 22000
   password: dongtaiwang.com
   sni: www.microsoft.com
   skip-cert-verify: true
-- name: assets.gateway-stream.com:52000
+- name: 62.210.124.146:22000-6b05da
+  type: hysteria2
+  server: 62.210.124.146
+  port: 22000
+  password: dongtaiwang.com
+  sni: www.microsoft.com
+  skip-cert-verify: true
+- name: assets.gateway-stream.com:52000-42b509
   type: hysteria2
   server: assets.gateway-stream.com
   port: 52000
@@ -328,7 +532,7 @@ proxies:
   sni: assets.gateway-stream.com
   obfs: salamander
   obfs-password: gu74jg3ym0e21zco
-- name: assets.gateway-stream.com:52002
+- name: assets.gateway-stream.com:52002-57fe80
   type: hysteria2
   server: assets.gateway-stream.com
   port: 52002
@@ -336,7 +540,23 @@ proxies:
   sni: assets.gateway-stream.com
   obfs: salamander
   obfs-password: ielzukpwth087afx
-- name: assets.gateway-stream.com:52013
+- name: assets.gateway-stream.com:52002-410ed4
+  type: hysteria2
+  server: assets.gateway-stream.com
+  port: 52002
+  password: elknam6l7izf3z71
+  sni: assets.gateway-stream.com
+  obfs: salamander
+  obfs-password: ielzukpwth087afx
+- name: assets.gateway-stream.com:52002-10551b
+  type: hysteria2
+  server: assets.gateway-stream.com
+  port: 52002
+  password: elknam6l7izf3z71
+  sni: assets.gateway-stream.com
+  obfs: salamander
+  obfs-password: ielzukpwth087afx
+- name: assets.gateway-stream.com:52013-53bd0e
   type: hysteria2
   server: assets.gateway-stream.com
   port: 52013
@@ -344,7 +564,15 @@ proxies:
   sni: assets.gateway-stream.com
   obfs: salamander
   obfs-password: cukfjxud1ebjuuzs
-- name: assets.gateway-stream.com:52021
+- name: assets.gateway-stream.com:52013-c3fd21
+  type: hysteria2
+  server: assets.gateway-stream.com
+  port: 52013
+  password: elknam6l7izf3z71
+  sni: assets.gateway-stream.com
+  obfs: salamander
+  obfs-password: cukfjxud1ebjuuzs
+- name: assets.gateway-stream.com:52021-8f92aa
   type: hysteria2
   server: assets.gateway-stream.com
   port: 52021
@@ -352,7 +580,22 @@ proxies:
   sni: assets.gateway-stream.com
   obfs: salamander
   obfs-password: mtg2vchyir6la3et
-- name: 91.107.174.32:25810
+- name: assets.gateway-stream.com:52021-fe6343
+  type: hysteria2
+  server: assets.gateway-stream.com
+  port: 52021
+  password: elknam6l7izf3z71
+  sni: assets.gateway-stream.com
+  obfs: salamander
+  obfs-password: mtg2vchyir6la3et
+- name: assets.gateway-stream.com:52021-304709
+  type: hysteria2
+  server: assets.gateway-stream.com
+  port: 52021
+  password: elknam6l7izf3z71
+  sni: assets.gateway-stream.com
+  obfs: salamander
+- name: 91.107.174.32:25810-fd6383
   type: hysteria2
   server: 91.107.174.32
   port: 25810
@@ -361,7 +604,7 @@ proxies:
   skip-cert-verify: true
   obfs: salamander
   obfs-password: T-ME-V2RayyNGvpn
-- name: 130.49.161.70:443
+- name: 130.49.161.70:443-29f3d1
   type: hysteria2
   server: 130.49.161.70
   port: 443
@@ -369,49 +612,93 @@ proxies:
   sni: hy2.aspidnet.xyz
   obfs: salamander
   obfs-password: rG07s3COMIEvdnQipRyWzx_H_2xygNC3
-- name: 13.229.106.122:443
+- name: 130.49.161.70:443-ddbee4
+  type: hysteria2
+  server: 130.49.161.70
+  port: 443
+  password: p7Q76LzlnS4hIzr1W3staBOnUe_WwSkR
+  sni: hy2.aspidnet.xyz
+  obfs: salamander
+  obfs-password: rG07s3COMIEvdnQipRyWzx_H_2xygNC3
+- name: 130.49.161.70:443-5321d9
+  type: hysteria2
+  server: 130.49.161.70
+  port: 443
+  password: p7Q76LzlnS4hIzr1W3staBOnUe_WwSkR
+  sni: hy2.aspidnet.xyz
+  obfs: salamander
+  obfs-password: rG07s3COMIEvdnQipRyWzx_H_2xygNC3
+- name: 13.229.106.122:443-f2cf37
   type: hysteria2
   server: 13.229.106.122
   port: 443
   password: qQe1z5kU8kN6SlKnDt9Ru3Qp
   sni: vpn-sg-001.fastervpn.world
   skip-cert-verify: true
-- name: 13.229.110.73:443
+- name: 13.229.106.122:443-29283d
+  type: hysteria2
+  server: 13.229.106.122
+  port: 443
+  password: qQe1z5kU8kN6SlKnDt9Ru3Qp
+  sni: vpn-sg-001.fastervpn.world
+  skip-cert-verify: true
+- name: 13.229.110.73:443-3d7d37
   type: hysteria2
   server: 13.229.110.73
   port: 443
   password: qQe1z5kU8kN6SlKnDt9Ru3Qp
   sni: vpn-sg-001.fastervpn.world
   skip-cert-verify: true
-- name: 13.250.29.24:443
+- name: 13.229.110.73:443-6dcee2
+  type: hysteria2
+  server: 13.229.110.73
+  port: 443
+  password: qQe1z5kU8kN6SlKnDt9Ru3Qp
+  sni: vpn-sg-001.fastervpn.world
+  skip-cert-verify: true
+- name: 13.250.29.24:443-2cf3d6
   type: hysteria2
   server: 13.250.29.24
   port: 443
   password: qQe1z5kU8kN6SlKnDt9Ru3Qp
   sni: vpn-sg-001.fastervpn.world
   skip-cert-verify: true
-- name: 47.129.9.33:443
+- name: 47.129.9.33:443-efb543
   type: hysteria2
   server: 47.129.9.33
   port: 443
   password: qQe1z5kU8kN6SlKnDt9Ru3Qp
   sni: vpn-sg-001.fastervpn.world
   skip-cert-verify: true
-- name: 54.251.212.188:443
+- name: 47.129.9.33:443-eef5d8
+  type: hysteria2
+  server: 47.129.9.33
+  port: 443
+  password: qQe1z5kU8kN6SlKnDt9Ru3Qp
+  sni: vpn-sg-001.fastervpn.world
+  skip-cert-verify: true
+- name: 54.251.212.188:443-6ce782
   type: hysteria2
   server: 54.251.212.188
   port: 443
   password: qQe1z5kU8kN6SlKnDt9Ru3Qp
   sni: vpn-sg-001.fastervpn.world
   skip-cert-verify: true
-- name: 54.255.220.11:443
+- name: 54.255.220.11:443-3d942f
   type: hysteria2
   server: 54.255.220.11
   port: 443
   password: qQe1z5kU8kN6SlKnDt9Ru3Qp
   sni: vpn-sg-001.fastervpn.world
   skip-cert-verify: true
-- name: 80.66.81.78:9443
+- name: 54.255.220.11:443-72771d
+  type: hysteria2
+  server: 54.255.220.11
+  port: 443
+  password: qQe1z5kU8kN6SlKnDt9Ru3Qp
+  sni: vpn-sg-001.fastervpn.world
+  skip-cert-verify: true
+- name: 80.66.81.78:9443-c13ab0
   type: hysteria2
   server: 80.66.81.78
   port: 9443
@@ -419,7 +706,22 @@ proxies:
   sni: tunel1.washing.help
   obfs: salamander
   obfs-password: oMgvuBy5Lj5kYM57sGsnjpjNcSEQ
-- name: 91.107.152.188:40460
+- name: 80.66.81.78:9443-c6cd8e
+  type: hysteria2
+  server: 80.66.81.78
+  port: 9443
+  password: rs2mR3g9bZiMloftx6lZQ59Um1Ld
+  sni: tunel1.washing.help
+  obfs: salamander
+  obfs-password: oMgvuBy5Lj5kYM57sGsnjpjNcSEQ
+- name: 80.66.81.78:9443-8eb432
+  type: hysteria2
+  server: 80.66.81.78
+  port: 9443
+  password: rs2mR3g9bZiMloftx6lZQ59Um1Ld
+  sni: tunel1.washing.help
+  obfs: salamander
+- name: 91.107.152.188:40460-6799e2
   type: hysteria2
   server: 91.107.152.188
   port: 40460
@@ -428,7 +730,7 @@ proxies:
   skip-cert-verify: true
   obfs: salamander
   obfs-password: t-me-V2RayyNGvpn
-- name: 140.233.177.48:33884
+- name: 140.233.177.48:33884-1f8278
   type: hysteria2
   server: 140.233.177.48
   port: 33884
@@ -437,7 +739,23 @@ proxies:
   skip-cert-verify: true
   obfs: salamander
   obfs-password: t-me-V2RayyNGvpn
-- name: 130.61.50.75:6443
+- name: 140.233.177.48:33884-c622e7
+  type: hysteria2
+  server: 140.233.177.48
+  port: 33884
+  password: vVaz4PV7B7
+  sni: www.oracle.com
+  skip-cert-verify: true
+  obfs: salamander
+  obfs-password: t-me-V2RayyNGvpn
+- name: 130.61.50.75:6443-495f03
+  type: hysteria2
+  server: 130.61.50.75
+  port: 6443
+  password: zhangyang
+  sni: dash.cloudflare.com
+  skip-cert-verify: true
+- name: 130.61.50.75:6443-c45389
   type: hysteria2
   server: 130.61.50.75
   port: 6443
@@ -448,63 +766,106 @@ proxy-groups:
 - name: AUTO
   type: url-test
   proxies:
-  - 202.61.205.86:4433
-  - quran.mci.ai:443
-  - 140.233.177.48:33884
-  - jongjmi.odnako.site:8449
-  - 45.155.103.217:8443
-  - qg.easyiran.org:56845
-  - de1.jamezwin.org:443
-  - 91.107.152.188:40460
-  - 46.8.210.209:443
-  - srm.kishonline.online:443
-  - 18.157.222.169:54040
-  - 91.107.152.188:31999
-  - 103.115.109.49:443
-  - 18.141.232.182:443
-  - 18.190.219.163:443
-  - 34.212.146.99:443
-  - 34.219.182.57:443
-  - 44.245.99.184:443
-  - 54.245.180.117:443
-  - 91.107.152.188:40460
-  - 91.107.174.32:25810
-  - 179.61.132.96:8443
-  - 91.107.152.188:31999
-  - 91.107.152.188:40460
-  - 91.107.152.188:31999
-  - 185.126.236.152:8443
-  - 91.107.152.188:31999
-  - pristytools.com.pristytools.com:2053
-  - 91.107.174.32:25810
-  - 91.107.152.188:31999
-  - 51.89.225.225:58410
-  - 66.92.161.59:42286
-  - 91.107.174.32:25810
-  - 206.71.158.37:35000
-  - ffc60249-t53wg0-t92wi1-1qkeg.hk2.hyhuawei.com:443
-  - 91.107.174.32:25810
-  - 181.214.99.162:35000
-  - 5.175.249.174:35000
-  - 155.248.209.237:33333
-  - fast88.screw.page:443
-  - 62.210.124.146:22000
-  - assets.gateway-stream.com:52000
-  - assets.gateway-stream.com:52002
-  - assets.gateway-stream.com:52013
-  - assets.gateway-stream.com:52021
-  - 91.107.174.32:25810
-  - 130.49.161.70:443
-  - 13.229.106.122:443
-  - 13.229.110.73:443
-  - 13.250.29.24:443
-  - 47.129.9.33:443
-  - 54.251.212.188:443
-  - 54.255.220.11:443
-  - 80.66.81.78:9443
-  - 91.107.152.188:40460
-  - 140.233.177.48:33884
-  - 130.61.50.75:6443
+  - 202.61.205.86:4433-86ab16
+  - 202.61.205.86:4433-a6f165
+  - quran.mci.ai:443-6fd617
+  - 140.233.177.48:33884-b46141
+  - 140.233.177.48:33884-50af8e
+  - jongjmi.odnako.site:8449-49fe8c
+  - jongjmi.odnako.site:8449-ccd205
+  - jongjmi.odnako.site:8449-6c4a03
+  - 45.155.103.217:8443-cea567
+  - 45.155.103.217:8443-4e5f39
+  - 45.155.103.217:8443-2fe320
+  - 45.155.103.217:8443-514a82
+  - qg.easyiran.org:56845-576582
+  - qg.easyiran.org:56845-f6cfee
+  - de1.jamezwin.org:443-9f106f
+  - de1.jamezwin.org:443-c9a74f
+  - 91.107.152.188:40460-fbeb45
+  - 46.8.210.209:443-04360e
+  - srm.kishonline.online:443-11d02e
+  - 18.157.222.169:54040-a7ff10
+  - 91.107.152.188:31999-5c1eb0
+  - 103.115.109.49:443-74006b
+  - 103.115.109.49:443-e70d15
+  - 18.141.232.182:443-4fe660
+  - 18.141.232.182:443-5b3655
+  - 18.190.219.163:443-3d6473
+  - 18.190.219.163:443-b2da21
+  - 34.212.146.99:443-eac30b
+  - 34.212.146.99:443-aa81ae
+  - 34.219.182.57:443-6f6bb9
+  - 34.219.182.57:443-eb384c
+  - 44.245.99.184:443-1a607e
+  - 54.245.180.117:443-936476
+  - 54.245.180.117:443-54d2ee
+  - 91.107.152.188:40460-94db38
+  - 91.107.174.32:25810-e00c35
+  - 179.61.132.96:8443-406181
+  - 91.107.152.188:31999-4f6df3
+  - 91.107.152.188:31999-d7cdb7
+  - 91.107.152.188:31999-6d8d21
+  - 91.107.152.188:40460-b85521
+  - 91.107.152.188:31999-e9e25d
+  - 91.107.152.188:31999-22202d
+  - 185.126.236.152:8443-9d7fd8
+  - 91.107.152.188:31999-a49efc
+  - pristytools.com.pristytools.com:2053-ba7dd4
+  - pristytools.com.pristytools.com:2053-537ac2
+  - 91.107.174.32:25810-3588c4
+  - 91.107.152.188:31999-e5db14
+  - 51.89.225.225:58410-52dca7
+  - 66.92.161.59:42286-a6abab
+  - 91.107.174.32:25810-c0ce65
+  - 91.107.174.32:25810-90b9b4
+  - 91.107.174.32:25810-844741
+  - 91.107.174.32:25810-ae4cb8
+  - 206.71.158.37:35000-11e059
+  - 206.71.158.37:35000-627d09
+  - ffc60249-t53wg0-t92wi1-1qkeg.hk2.hyhuawei.com:443-449a5a
+  - ffc60249-t53wg0-t92wi1-1qkeg.hk2.hyhuawei.com:443-5fbfee
+  - 91.107.174.32:25810-43f57b
+  - 181.214.99.162:35000-35d3f4
+  - 5.175.249.174:35000-c69863
+  - 5.175.249.174:35000-9dc7d5
+  - 5.175.249.174:35000-589236
+  - 155.248.209.237:33333-4d63ca
+  - 155.248.209.237:33333-b6bb12
+  - fast88.screw.page:443-1d8c7f
+  - 62.210.124.146:22000-9e50f9
+  - 62.210.124.146:22000-6b05da
+  - assets.gateway-stream.com:52000-42b509
+  - assets.gateway-stream.com:52002-57fe80
+  - assets.gateway-stream.com:52002-410ed4
+  - assets.gateway-stream.com:52002-10551b
+  - assets.gateway-stream.com:52013-53bd0e
+  - assets.gateway-stream.com:52013-c3fd21
+  - assets.gateway-stream.com:52021-8f92aa
+  - assets.gateway-stream.com:52021-fe6343
+  - assets.gateway-stream.com:52021-304709
+  - 91.107.174.32:25810-fd6383
+  - 130.49.161.70:443-29f3d1
+  - 130.49.161.70:443-ddbee4
+  - 130.49.161.70:443-5321d9
+  - 13.229.106.122:443-f2cf37
+  - 13.229.106.122:443-29283d
+  - 13.229.110.73:443-3d7d37
+  - 13.229.110.73:443-6dcee2
+  - 13.250.29.24:443-2cf3d6
+  - 47.129.9.33:443-efb543
+  - 47.129.9.33:443-eef5d8
+  - 54.251.212.188:443-6ce782
+  - 54.255.220.11:443-3d942f
+  - 54.255.220.11:443-72771d
+  - 80.66.81.78:9443-c13ab0
+  - 80.66.81.78:9443-c6cd8e
+  - 80.66.81.78:9443-8eb432
+  - 91.107.152.188:40460-6799e2
+  - 140.233.177.48:33884-1f8278
+  - 140.233.177.48:33884-c622e7
+  - 130.61.50.75:6443-495f03
+  - 130.61.50.75:6443-c45389
   url: https://www.gstatic.com/generate_204
   interval: 180
   tolerance: 50
