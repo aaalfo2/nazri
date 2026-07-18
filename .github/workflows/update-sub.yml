@@ -2,11 +2,11 @@ name: Update V2Ray Subscription
 
 on:
   schedule:
-    - cron: '*/30 * * * *'    # Runs every 30 minutes
-  workflow_dispatch:          # Allows manual run
+    - cron: '*/30 * * * *'     # Every 30 minutes
+  workflow_dispatch:
 
 permissions:
-  contents: write            # ← This is the important fix
+  contents: write
 
 jobs:
   update:
@@ -16,30 +16,26 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}   # ← Important
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Fetch latest configs & generate subscription
+      - name: Fetch latest configs (Raw format)
         run: |
-          echo "Fetching latest nodes from source..."
-          curl -s "https://raw.githubusercontent.com/ebrasha/free-v2ray-public-list/refs/heads/main/V2Ray-Config-By-EbraSha-All-Type.txt" -o configs.txt
+          echo "Fetching latest V2Ray nodes..."
+          curl -s "https://raw.githubusercontent.com/ebrasha/free-v2ray-public-list/refs/heads/main/V2Ray-Config-By-EbraSha-All-Type.txt" -o temp.txt
           
-          # Extract only valid proxy links and limit to 200
-          grep -E '^(vmess://|vless://|trojan://|ss://)' configs.txt | head -n 200 > raw.txt
+          # Keep only valid proxy links
+          grep -E '^(vmess://|vless://|trojan://|ss://)' temp.txt | head -n 250 > sub.txt
           
-          echo "Found $(wc -l < raw.txt) valid nodes"
-          
-          # Convert to Base64 (V2RayN format)
-          base64 -w 0 raw.txt > sub.txt
-          
-          echo "Subscription file generated successfully."
+          echo "✅ Updated with $(wc -l < sub.txt) nodes"
+          rm temp.txt
 
-      - name: Commit & Push changes
+      - name: Commit & Push if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           
           if git diff --quiet sub.txt; then
-            echo "No changes to commit."
+            echo "No new nodes. Nothing to commit."
           else
             git add sub.txt
             git commit -m "Update subscription - $(date '+%Y-%m-%d %H:%M:%S UTC')"
