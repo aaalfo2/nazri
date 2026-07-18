@@ -2,7 +2,7 @@ name: Update V2Ray Subscription
 
 on:
   schedule:
-    - cron: '*/30 * * * *'     # Every 30 minutes
+    - cron: '*/30 * * * *'
   workflow_dispatch:
 
 permissions:
@@ -18,27 +18,29 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Fetch latest configs (Raw format)
+      - name: Fetch & Generate Base64 Subscription
         run: |
-          echo "Fetching latest V2Ray nodes..."
-          curl -s "https://raw.githubusercontent.com/ebrasha/free-v2ray-public-list/refs/heads/main/V2Ray-Config-By-EbraSha-All-Type.txt" -o temp.txt
+          echo "Fetching latest nodes..."
+          curl -s "https://raw.githubusercontent.com/ebrasha/free-v2ray-public-list/refs/heads/main/V2Ray-Config-By-EbraSha-All-Type.txt" -o configs.txt
           
-          # Keep only valid proxy links
-          grep -E '^(vmess://|vless://|trojan://|ss://)' temp.txt | head -n 250 > sub.txt
+          # Extract valid links
+          grep -E '^(vmess://|vless://|trojan://|ss://)' configs.txt | head -n 200 > raw.txt
           
-          echo "✅ Updated with $(wc -l < sub.txt) nodes"
-          rm temp.txt
+          # Convert to Base64 (this is the key part V2RayN expects)
+          base64 -w 0 raw.txt > sub.txt
+          
+          echo "Generated Base64 subscription with $(wc -l < raw.txt) nodes"
 
-      - name: Commit & Push if changed
+      - name: Commit & Push
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           
           if git diff --quiet sub.txt; then
-            echo "No new nodes. Nothing to commit."
+            echo "No changes."
           else
             git add sub.txt
-            git commit -m "Update subscription - $(date '+%Y-%m-%d %H:%M:%S UTC')"
+            git commit -m "Update subscription (Base64) - $(date '+%Y-%m-%d %H:%M:%S UTC')"
             git push
-            echo "Subscription updated successfully!"
+            echo "✅ Subscription updated!"
           fi
