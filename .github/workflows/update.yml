@@ -1,8 +1,6 @@
 name: Update Hysteria2 Clash Config
 
 on:
-  schedule:
-    - cron: "*/30 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -16,25 +14,36 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Check files
+        run: |
+          ls -la
+          echo "-----"
+          ls -la .github/workflows
+
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.x"
 
-      - name: Install dependencies
+      - name: Install
         run: pip install -r requirements.txt
 
-      - name: Generate config
-        run: python converter.py
-
-      - name: Commit changes
+      - name: Generate
         run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "actions@github.com"
+          python converter.py
+          echo "Generated file:"
+          ls -lh config.yaml
+          head -30 config.yaml
+
+      - name: Commit
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
 
           git add config.yaml
 
-          git diff --quiet && exit 0
+          git status
 
-          git commit -m "Auto update nodes"
+          git commit -m "Update config" || echo "Nothing changed"
+
           git push
