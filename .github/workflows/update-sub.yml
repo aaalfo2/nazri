@@ -1,0 +1,34 @@
+name: Update V2Ray Subscription
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'   # Every 15 minutes
+  workflow_dispatch:         # Allows manual trigger
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch latest configs and generate subscription
+        run: |
+          echo "Fetching latest nodes..."
+          curl -s "https://raw.githubusercontent.com/ebrasha/free-v2ray-public-list/refs/heads/main/V2Ray-Config-By-EbraSha-All-Type.txt" -o configs.txt
+          
+          # Take first 100 valid lines (adjust as needed)
+          grep -E '^(vmess|vless|trojan|ss)://' configs.txt | head -n 100 > raw.txt
+          
+          # Create Base64 subscription
+          base64 -w 0 raw.txt > sub.txt        
+          
+          echo "Subscription updated with $(wc -l < raw.txt) nodes"
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add sub.txt
+          git commit -m "Update subscription - $(date)" || echo "No changes"
+          git push
