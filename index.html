@@ -9,7 +9,7 @@
 <body class="bg-zinc-950 text-zinc-100 min-h-screen">
   <div class="max-w-2xl mx-auto px-6 py-20 text-center">
     <h1 class="text-4xl font-bold mb-3">My V2Ray Subscription</h1>
-    <p class="text-emerald-400 mb-8">Auto-updates every 30 minutes • Base64 Format</p>
+    <p class="text-emerald-400 mb-8">Raw Format • Auto-updates every 30 minutes</p>
     
     <div class="bg-zinc-900 border border-zinc-700 rounded-3xl p-8 mb-10">
       <p id="subUrl" class="font-mono text-sm break-all text-emerald-300 bg-black p-4 rounded-2xl mb-6">
@@ -20,8 +20,6 @@
         Copy Subscription URL
       </button>
     </div>
-
-    <p class="text-zinc-500 text-sm">Paste in V2RayN → Subscription Group</p>
   </div>
 
   <script>
@@ -30,9 +28,7 @@
     document.getElementById('subUrl').textContent = subUrl;
 
     function copyUrl() {
-      navigator.clipboard.writeText(subUrl).then(() => {
-        alert("✅ URL copied! Paste it in V2RayN.");
-      });
+      navigator.clipboard.writeText(subUrl).then(() => alert("✅ Copied! Try updating in V2RayN now."));
     }
   </script>
 </body>
