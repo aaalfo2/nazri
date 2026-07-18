@@ -2,33 +2,47 @@ name: Update V2Ray Subscription
 
 on:
   schedule:
-    - cron: '*/15 * * * *'   # Every 15 minutes
-  workflow_dispatch:         # Allows manual trigger
+    - cron: '*/30 * * * *'    # Runs every 30 minutes
+  workflow_dispatch:          # Allows manual run
+
+permissions:
+  contents: write            # ← This is the important fix
 
 jobs:
   update:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}   # ← Important
 
-      - name: Fetch latest configs and generate subscription
+      - name: Fetch latest configs & generate subscription
         run: |
-          echo "Fetching latest nodes..."
+          echo "Fetching latest nodes from source..."
           curl -s "https://raw.githubusercontent.com/ebrasha/free-v2ray-public-list/refs/heads/main/V2Ray-Config-By-EbraSha-All-Type.txt" -o configs.txt
           
-          # Take first 100 valid lines (adjust as needed)
-          grep -E '^(vmess|vless|trojan|ss)://' configs.txt | head -n 100 > raw.txt
+          # Extract only valid proxy links and limit to 200
+          grep -E '^(vmess://|vless://|trojan://|ss://)' configs.txt | head -n 200 > raw.txt
           
-          # Create Base64 subscription
-          base64 -w 0 raw.txt > sub.txt        
+          echo "Found $(wc -l < raw.txt) valid nodes"
           
-          echo "Subscription updated with $(wc -l < raw.txt) nodes"
+          # Convert to Base64 (V2RayN format)
+          base64 -w 0 raw.txt > sub.txt
+          
+          echo "Subscription file generated successfully."
 
-      - name: Commit and push changes
+      - name: Commit & Push changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add sub.txt
-          git commit -m "Update subscription - $(date)" || echo "No changes"
-          git push
+          
+          if git diff --quiet sub.txt; then
+            echo "No changes to commit."
+          else
+            git add sub.txt
+            git commit -m "Update subscription - $(date '+%Y-%m-%d %H:%M:%S UTC')"
+            git push
+            echo "Subscription updated successfully!"
+          fi
