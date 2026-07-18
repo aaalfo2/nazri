@@ -34,21 +34,22 @@ def parse_node(line):
     if not line.startswith("hysteria2://"):
         return None
 
-
     try:
 
-        url = line.split("#")[0].strip()
+        line = html.unescape(line.strip())
 
-        name = line.split("#")[-1].strip()
+        if "#" in line:
+            url, remark = line.split("#", 1)
+        else:
+            url = line
+            remark = ""
+
+        if "undefined" in url:
+            return None
 
         parsed = urllib.parse.urlparse(url)
 
-
-        if not parsed.hostname:
-            return None
-
-
-        if "undefined" in url:
+        if not parsed.hostname or not parsed.username:
             return None
 
 
@@ -60,26 +61,27 @@ def parse_node(line):
         password = parsed.username
 
 
-        if not password:
-            return None
-
-
-        node_name = (
-            f"{server}:{port}"
-        )
+        unique_id = hashlib.md5(
+            url.encode()
+        ).hexdigest()[:6]
 
 
         proxy = {
 
-            "name": node_name,
+            "name":
+                f"{server}:{port}-{unique_id}",
 
-            "type": "hysteria2",
+            "type":
+                "hysteria2",
 
-            "server": server,
+            "server":
+                server,
 
-            "port": port,
+            "port":
+                port,
 
-            "password": password,
+            "password":
+                password
 
         }
 
@@ -88,19 +90,18 @@ def parse_node(line):
             proxy["sni"] = query["sni"][0]
 
 
-        if query.get("insecure") == ["1"]:
+        if (
+            query.get("insecure") == ["1"]
+            or query.get("allowInsecure") == ["1"]
+        ):
             proxy["skip-cert-verify"] = True
 
 
         if "obfs" in query:
-
-            proxy["obfs"] = (
-                query["obfs"][0]
-            )
+            proxy["obfs"] = query["obfs"][0]
 
 
         if "obfs-password" in query:
-
             proxy["obfs-password"] = (
                 query["obfs-password"][0]
             )
@@ -110,18 +111,13 @@ def parse_node(line):
 
 
     except Exception:
-
         return None
 
 
 
 def fingerprint(proxy):
 
-    raw = (
-        proxy["server"]
-        + str(proxy["port"])
-        + proxy["password"]
-    )
+    raw = str(proxy)
 
     return hashlib.md5(
         raw.encode()
