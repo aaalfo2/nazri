@@ -23,8 +23,7 @@
   </div>
 
   <script>
-    const repoName = window.location.pathname.split('/')[1] || '';
-    const subUrl = `${window.location.origin}/${repoName}/sub.txt`;
+    const subUrl = `https://raw.githubusercontent.com/ebrasha/free-v2ray-public-list/refs/heads/main/separated-protocols/hysteria2_configs.txt`;
     document.getElementById('subUrl').textContent = subUrl;
 
     function copyUrl() {
