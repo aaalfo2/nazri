@@ -19,3 +19,11 @@ Hysteria2 public nodes into a Mihomo/Clash YAML subscription.
 ## Clash Verge URL
 
 After the first GitHub Action run:
+
+https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/config.yaml
+
+Import this URL into Clash Verge.
+
+## AUTO group
+
+Clash will automatically select the lowest latency server.
