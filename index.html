@@ -9,7 +9,7 @@
 <body class="bg-zinc-950 text-zinc-100 min-h-screen">
   <div class="max-w-2xl mx-auto px-6 py-20 text-center">
     <h1 class="text-4xl font-bold mb-3">My V2Ray Subscription</h1>
-    <p class="text-emerald-400 mb-8">Auto-updates every 30 minutes from public sources</p>
+    <p class="text-emerald-400 mb-8">Auto-updates every 30 minutes • Base64 Format</p>
     
     <div class="bg-zinc-900 border border-zinc-700 rounded-3xl p-8 mb-10">
       <p id="subUrl" class="font-mono text-sm break-all text-emerald-300 bg-black p-4 rounded-2xl mb-6">
@@ -21,19 +21,17 @@
       </button>
     </div>
 
-    <p class="text-zinc-500 text-sm">Paste this URL in V2RayN → Subscription Group → Add</p>
+    <p class="text-zinc-500 text-sm">Paste in V2RayN → Subscription Group</p>
   </div>
 
   <script>
-    // Automatically detect correct repository URL
-    const repoName = window.location.pathname.split('/')[1] || 'nazri';
+    const repoName = window.location.pathname.split('/')[1] || '';
     const subUrl = `${window.location.origin}/${repoName}/sub.txt`;
-    
     document.getElementById('subUrl').textContent = subUrl;
 
     function copyUrl() {
       navigator.clipboard.writeText(subUrl).then(() => {
-        alert("✅ Subscription URL copied successfully!");
+        alert("✅ URL copied! Paste it in V2RayN.");
       });
     }
   </script>
