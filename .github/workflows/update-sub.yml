@@ -13,23 +13,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Fetch & Generate Base64 Subscription
+      - name: Create Raw Subscription (Plain Text)
         run: |
-          echo "Fetching latest nodes..."
+          echo "Fetching latest configs..."
           curl -s "https://raw.githubusercontent.com/ebrasha/free-v2ray-public-list/refs/heads/main/V2Ray-Config-By-EbraSha-All-Type.txt" -o configs.txt
           
-          # Extract valid links
-          grep -E '^(vmess://|vless://|trojan://|ss://)' configs.txt | head -n 200 > raw.txt
+          # Clean output - only valid links, Unix line endings, no extra spaces
+          grep -E '^(vmess://|vless://|trojan://|ss://)' configs.txt | head -n 200 | tr -d '\r' > sub.txt
           
-          # Convert to Base64 (this is the key part V2RayN expects)
-          base64 -w 0 raw.txt > sub.txt
-          
-          echo "Generated Base64 subscription with $(wc -l < raw.txt) nodes"
+          echo "Created raw subscription with $(wc -l < sub.txt) nodes"
 
       - name: Commit & Push
         run: |
@@ -40,7 +36,6 @@ jobs:
             echo "No changes."
           else
             git add sub.txt
-            git commit -m "Update subscription (Base64) - $(date '+%Y-%m-%d %H:%M:%S UTC')"
+            git commit -m "Update raw subscription - $(date '+%Y-%m-%d %H:%M:%S UTC')"
             git push
-            echo "✅ Subscription updated!"
           fi
