@@ -3,31 +3,38 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Free V2Ray Subscription</title>
+  <title>My V2Ray Subscription</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-zinc-950 text-zinc-100">
-  <div class="max-w-2xl mx-auto px-6 py-16 text-center">
-    <h1 class="text-4xl font-bold mb-4">My V2Ray Subscription</h1>
-    <p class="text-zinc-400 mb-8">Updated from public sources • Auto-refreshes in V2RayN</p>
+<body class="bg-zinc-950 text-zinc-100 min-h-screen">
+  <div class="max-w-2xl mx-auto px-6 py-20 text-center">
+    <h1 class="text-4xl font-bold mb-3">My V2Ray Subscription</h1>
+    <p class="text-emerald-400 mb-8">Auto-updates every 30 minutes from public sources</p>
     
-    <div class="bg-zinc-900 border border-zinc-700 rounded-3xl p-8 mb-8">
-      <p class="text-emerald-400 font-mono break-all text-sm mb-6">
-        https://YOUR-USERNAME.github.io/YOUR-REPO-NAME/sub.txt
+    <div class="bg-zinc-900 border border-zinc-700 rounded-3xl p-8 mb-10">
+      <p id="subUrl" class="font-mono text-sm break-all text-emerald-300 bg-black p-4 rounded-2xl mb-6">
+        Loading...
       </p>
       <button onclick="copyUrl()" 
-              class="bg-emerald-600 hover:bg-emerald-500 px-8 py-4 rounded-2xl font-medium text-lg">
+              class="bg-emerald-600 hover:bg-emerald-500 transition px-8 py-4 rounded-2xl font-medium text-lg w-full">
         Copy Subscription URL
       </button>
     </div>
 
-    <p class="text-sm text-zinc-500">Just paste the URL above into V2RayN → Subscription Group</p>
+    <p class="text-zinc-500 text-sm">Paste this URL in V2RayN → Subscription Group → Add</p>
   </div>
 
   <script>
+    // Automatically detect correct repository URL
+    const repoName = window.location.pathname.split('/')[1] || 'nazri';
+    const subUrl = `${window.location.origin}/${repoName}/sub.txt`;
+    
+    document.getElementById('subUrl').textContent = subUrl;
+
     function copyUrl() {
-      const url = window.location.origin + "/sub.txt";
-      navigator.clipboard.writeText(url).then(() => alert("✅ Subscription URL copied!"));
+      navigator.clipboard.writeText(subUrl).then(() => {
+        alert("✅ Subscription URL copied successfully!");
+      });
     }
   </script>
 </body>
